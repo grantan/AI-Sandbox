@@ -1,34 +1,10 @@
-# =============== #
-# Unity generated #
-# =============== #
-Temp/
-Obj/
-UnityGenerated/
-Library/
-Assets/AssetStoreTools*
-
-# ===================================== #
-# Visual Studio / MonoDevelop generated #
-# ===================================== #
-ExportedObj/
-*.svd
-*.userprefs
-*.csproj
-*.pidb
 *.suo
-*.sln
 *.user
-*.unityproj
-*.booproj
-
-# ============ #
-# OS generated #
-# ============ #
-.DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-Icon?
-ehthumbs.db
-Thumbs.db
+_ReSharper.*
+bin
+obj
+packages
+# Generated code from the tool
+CodeRepositories/
+# Visual Studio 2015 cache/options directory
+.vs/
