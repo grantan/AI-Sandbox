@@ -10,36 +10,43 @@
     <form id="form1" runat="server">
         <div>
             <div>
-                <asp:Label ID="lblInputs" runat="server" Text="L0 Inputs"></asp:Label>
+                <asp:Label ID="lblInputs" runat="server" Text="Training Set X Y"></asp:Label>
             </div>
-            <div>
-                <asp:GridView ID="gvTraining" runat="server" ></asp:GridView>
+            <div style="float:left">
+                <asp:GridView ID="gvTrainingInputs" runat="server" ></asp:GridView>
             </div>            
-        </div>
+            <div>
+                <asp:GridView ID="gvTrainingOutputs" runat="server" BorderWidth="2" ></asp:GridView>
+            </div> 
+        </div>       
 
         <br />
 
-        <div>
+        <div style="display:inline-block">
             <div>
                 <asp:Label ID="lblWeights" runat="server" Text="Random Weights"></asp:Label>
             </div>
         
-            <div>
-                <asp:GridView ID="gvWeights" runat="server"></asp:GridView>
+            <div style="float:left">
+                <asp:GridView ID="gvInitialWeights" runat="server"></asp:GridView>
+
+            </div>
+             <div>
+                <asp:GridView ID="gvFinalWeights" runat="server" BorderWidth="2"></asp:GridView>
 
             </div>
         </div>
 
         <br />
+        <br />
         
         <div>
             <div>
-                <asp:Label ID="lblDot" runat="server" Text="L0 dot Weights Results"></asp:Label>
-            </div>
+                <asp:Label ID="lblL0DotWeights" runat="server" Text="L0 dot Weights"></asp:Label>
+            </div>      
+        
             <div>
-                <asp:GridView ID="gvDotProduct" runat="server" >
-
-                </asp:GridView>
+                <asp:GridView ID="gvL0DotWeights" runat="server" > </asp:GridView>
             </div>
         </div>
         <div>

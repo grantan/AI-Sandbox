@@ -13,8 +13,19 @@ namespace AI_Sandbox.AI
         // and mean 0.
         
         public int[,] TrainingInputsXL0 { get; set; }
+
+        //desired result from inputs
+        public int[,] TrainingOutputY { get; set; }
+
+        //calculated result of training inputs
         public int[,] TrainingOutputYL1 { get; set; }
+
+        public float[,] SynapticWeightsInitial { get; set; }
+
         public float[,] SynapticWeightsSyn0 { get; set; }
+
+        public float[,] XL0DotInitialWeights { get; set; }
+        
 
         public SimpleNeuralNetwork()
         {
@@ -27,6 +38,7 @@ namespace AI_Sandbox.AI
             int outputConnectionSize = 1;
 
             //TrainingInputsXL0 = new int[inputConnectionsCount, trainingSetSize];      
+            TrainingOutputY = new int[inputConnectionsCount, outputConnectionSize];  //4 rows, 1 column
             TrainingOutputYL1 = new int[inputConnectionsCount, outputConnectionSize];  //4 rows, 1 column
             //SynapticWeightsSyn0 = new float[trainingSetSize, outputConnectionSize];   
 
@@ -60,19 +72,33 @@ namespace AI_Sandbox.AI
 
         }
 
-        public SimpleNeuralNetwork(int[,] inputConnections, int[,] outputConnections, int trainingSetSize)
+        public SimpleNeuralNetwork(int[,] inputsXL0, int[,] outputY)
         {
+
+            TrainingInputsXL0 = inputsXL0;  //4X3
+            int trainingSetColumns = TrainingInputsXL0.GetLength(1);
+
+            TrainingOutputY = outputY;  //4X1
+            int outputConnectionSize = TrainingOutputY.GetLength(1);
+
+            //https://msdn.microsoft.com/en-us/library/system.random.nextdouble(v=vs.110).aspx
+            int seed = 1;
+            //Random fixRand = new Random(seed);
+
+            //3 rows, 1 column
+            SynapticWeightsInitial = RandomOperations.GetRandomWeights(seed, trainingSetColumns, outputConnectionSize);
+
+            XL0DotInitialWeights = MatrixOperations.DotProduct(TrainingInputsXL0, SynapticWeightsInitial);
+
             //Seed the random# generator, then randomly assign values to the weights. Random numbers should have a mean of 0
             //syn0 = 2 * np.random.random((3, 1)) - 1
             //From https://docs.scipy.org/doc/numpy/reference/generated/numpy.random.random.html#numpy.random.random
             //Results are from the “continuous uniform” distribution over the stated interval.To sample Unif[a, b), b > a multiply the output of random_sample by(b-a) and add a:
             //(b - a) * random_sample() + a.
             //So, 2 * np.random.random((3, 1)) - 1   MEANS THAT a = -1, and b = 1.
-            
-
-
-
 
         }
+
+
     }
 }

@@ -8,7 +8,7 @@ namespace AI_Sandbox.DataUtil
 {
     public static class DataTableUtil
     {
-        public static DataTable ArrayToDataTableFloat(float[,] fArray)   //Generics would be good
+        public static DataTable ArrayToDataTableFloat(float[,] fArray, string columnHeaderPrefix)   //Generics would be good
         {
             DataTable dt = new DataTable();
             int rowCount = fArray.GetLength(0);
@@ -18,7 +18,7 @@ namespace AI_Sandbox.DataUtil
             // DataColumn you can use constructor DataColumn(name,type);
             for (int cols = 0; cols < colCount; cols++)
             {
-                DataColumn dc = new DataColumn("Weight_" + cols );
+                DataColumn dc = new DataColumn(columnHeaderPrefix + cols );
                 dt.Columns.Add(dc);
 
             }     
@@ -37,7 +37,7 @@ namespace AI_Sandbox.DataUtil
             return dt;
         }
 
-        public static object ArrayToDataTableInt(int[,] iArray)
+        public static object ArrayToDataTableInt(int[,] iArray, string columnHeaderPrefix)
         {
             DataTable dt = new DataTable();
             int rowCount = iArray.GetLength(0);
@@ -47,7 +47,7 @@ namespace AI_Sandbox.DataUtil
             // DataColumn you can use constructor DataColumn(name,type);
             for (int cols = 0; cols < colCount; cols++)
             {
-                DataColumn dc = new DataColumn("Input_" + cols);
+                DataColumn dc = new DataColumn( columnHeaderPrefix + cols);
                 dt.Columns.Add(dc);
 
             }

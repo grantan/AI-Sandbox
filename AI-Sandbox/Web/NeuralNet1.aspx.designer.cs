@@ -31,13 +31,22 @@ namespace AI_Sandbox.Web {
         protected global::System.Web.UI.WebControls.Label lblInputs;
         
         /// <summary>
-        /// gvTraining control.
+        /// gvTrainingInputs control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView gvTraining;
+        protected global::System.Web.UI.WebControls.GridView gvTrainingInputs;
+        
+        /// <summary>
+        /// gvTrainingOutputs control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView gvTrainingOutputs;
         
         /// <summary>
         /// lblWeights control.
@@ -49,31 +58,40 @@ namespace AI_Sandbox.Web {
         protected global::System.Web.UI.WebControls.Label lblWeights;
         
         /// <summary>
-        /// gvWeights control.
+        /// gvInitialWeights control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView gvWeights;
+        protected global::System.Web.UI.WebControls.GridView gvInitialWeights;
         
         /// <summary>
-        /// lblDot control.
+        /// gvFinalWeights control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblDot;
+        protected global::System.Web.UI.WebControls.GridView gvFinalWeights;
         
         /// <summary>
-        /// gvDotProduct control.
+        /// lblL0DotWeights control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView gvDotProduct;
+        protected global::System.Web.UI.WebControls.Label lblL0DotWeights;
+        
+        /// <summary>
+        /// gvL0DotWeights control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView gvL0DotWeights;
         
         /// <summary>
         /// btnProcess control.
