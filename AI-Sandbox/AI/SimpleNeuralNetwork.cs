@@ -24,71 +24,66 @@ namespace AI_Sandbox.AI
 
         public float[,] SynapticWeightsSyn0 { get; set; }
 
-        public float[,] XL0DotInitialWeights { get; set; }
+        public float[,] XL0DotWeights { get; set; }  
         
+        public float[,] NormalizedWeightedSum { get; set; }
+
+        public float[,] Error { get; set; }
+
+        public float[,] ErrorDelta { get; set; }
+
+        public float[,] SigmoidGradient { get; set; }
+
+        public float[,] Adjustment { get; set; }
 
         public SimpleNeuralNetwork()
         {
-            //seed the random generator
-            // = 2 * random.random((3, 1)) - 1
-
-            //Example: create matrices based on hard-coded values
-            const int trainingSetSize = 3;  //columns
-            const int inputConnectionsCount = 4;     //start with 3 then infer 4?
-            int outputConnectionSize = 1;
-
-            //TrainingInputsXL0 = new int[inputConnectionsCount, trainingSetSize];      
-            TrainingOutputY = new int[inputConnectionsCount, outputConnectionSize];  //4 rows, 1 column
-            TrainingOutputYL1 = new int[inputConnectionsCount, outputConnectionSize];  //4 rows, 1 column
-            //SynapticWeightsSyn0 = new float[trainingSetSize, outputConnectionSize];   
-
-
-            //https://msdn.microsoft.com/en-us/library/system.random.nextdouble(v=vs.110).aspx
-            int seed = 1;
-            //Random fixRand = new Random(seed);
-
-
-            // Generate the n random doubles. (0-1)
-            //for (int j = 0; j < 6; j++)
-            //    Console.Write(" {0:F8} ", fixRand.NextDouble());
-            //Console.WriteLine();
-
-            //float[,] randomWeights = new float[3,1] { { -0.75f }, { .5f }, { .25f } };  //mean of 0?  How do you get that randomly?
-
-            //4 rows, 3 columns
-            TrainingInputsXL0 = new int[inputConnectionsCount, trainingSetSize] { { 0, 1, 1 }, { 1, 0, 1 }, { 1, 1, 0 }, { 0, 0, 1 } };
-
-            //3 rows, 1 column
-            SynapticWeightsSyn0 = RandomOperations.GetRandomWeights(seed, trainingSetSize, outputConnectionSize);
-
-            //Apply dot product between X (test inputs) and syn0 (weights).
-            // 4x3 matrix dot 3x1 matrix = 4x1 matrix
-
-            //float[,] L0_dot_syn0 = MatrixOperations.DotProduct(TrainingInputsXL0, SynapticWeightsSyn0);
-
-
- 
-
-
+            
         }
 
         public SimpleNeuralNetwork(int[,] inputsXL0, int[,] outputY)
         {
 
             TrainingInputsXL0 = inputsXL0;  //4X3
-            int trainingSetColumns = TrainingInputsXL0.GetLength(1);
+            int trainingSetRows = TrainingInputsXL0.GetLength(0);  //4
+            int trainingSetColumns = TrainingInputsXL0.GetLength(1);  //3
 
             TrainingOutputY = outputY;  //4X1
-            int outputConnectionSize = TrainingOutputY.GetLength(1);
+            int outputConnectionRows = TrainingOutputY.GetLength(0);  //4
+            int outputConnectionColumns = TrainingOutputY.GetLength(1);  //1
+
+            NormalizedWeightedSum = new float[trainingSetRows, outputConnectionColumns];
+            Error = new float[trainingSetRows, outputConnectionColumns];
+            ErrorDelta = new float[trainingSetRows, outputConnectionColumns];
+            SigmoidGradient = new float[trainingSetRows, outputConnectionColumns];
+
+            int trainingReps = 10;
 
             //https://msdn.microsoft.com/en-us/library/system.random.nextdouble(v=vs.110).aspx
             int seed = 1;
             //Random fixRand = new Random(seed);
 
             //3 rows, 1 column
-            SynapticWeightsInitial = RandomOperations.GetRandomWeights(seed, trainingSetColumns, outputConnectionSize);
+            SynapticWeightsInitial = RandomOperations.GetRandomWeights(seed, trainingSetColumns, outputConnectionColumns);
+            SynapticWeightsSyn0 = SynapticWeightsInitial;
 
-            XL0DotInitialWeights = MatrixOperations.DotProduct(TrainingInputsXL0, SynapticWeightsInitial);
+            for (int reps = 0; reps < trainingReps; reps++)
+            {
+                XL0DotWeights = MatrixOperations.DotProduct(TrainingInputsXL0, SynapticWeightsSyn0);
+                NormalizedWeightedSum = MatrixOperations.NormalizeSigmoid(XL0DotWeights);
+
+                Error = MatrixOperations.Difference(TrainingOutputY, NormalizedWeightedSum);
+                SigmoidGradient = MatrixOperations.SigmoidGradient(NormalizedWeightedSum);
+                ErrorDelta = MatrixOperations.ProductByElement(Error, SigmoidGradient);
+
+                int[,] L0Transpose = MatrixOperations.TransposeInt(TrainingInputsXL0);   //generics
+
+                Adjustment = MatrixOperations.DotProduct(L0Transpose, ErrorDelta);
+
+                SynapticWeightsSyn0 = MatrixOperations.Sum(SynapticWeightsSyn0, Adjustment);
+            }
+
+            
 
             //Seed the random# generator, then randomly assign values to the weights. Random numbers should have a mean of 0
             //syn0 = 2 * np.random.random((3, 1)) - 1

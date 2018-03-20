@@ -36,7 +36,13 @@ namespace AI_Sandbox.Web
             neuralNet = new SimpleNeuralNetwork(TrainingInputsXL0, TrainingOutputsY);
             BindInitialWeights();
             BindInputDotWeights();
-        }        
+            BindNormalizedWeights();
+            BindError();
+            BindSigmoidGradient();
+            BindErrorDelta();
+            BindAdjustment();
+            BindFinalWeights();
+        }
 
         private void BindTrainingInputs()
         {
@@ -63,14 +69,54 @@ namespace AI_Sandbox.Web
         {
             //do we still remember neural net values?  Nope
             string columHeaderPrefix = "XL0DotInitialWeight_";
-            gvL0DotWeights.DataSource = DataTableUtil.ArrayToDataTableFloat(neuralNet.XL0DotInitialWeights, columHeaderPrefix);
+            gvL0DotWeights.DataSource = DataTableUtil.ArrayToDataTableFloat(neuralNet.XL0DotWeights, columHeaderPrefix);
             gvL0DotWeights.DataBind();
 
-            //if we don't remember nn values, get them from the grids?? oh no
-            
-
-            
+            //if we don't remember nn values, get them from the grids?? oh no             
 
         }
+
+        private void BindNormalizedWeights()
+        {
+            string columHeaderPrefix = "NormalizedWeight_";
+            gvNormalWeights.DataSource = DataTableUtil.ArrayToDataTableFloat(neuralNet.NormalizedWeightedSum, columHeaderPrefix);
+            gvNormalWeights.DataBind();
+        }
+
+        private void BindError()
+        {
+            string columHeaderPrefix = "Error_";
+            gvError.DataSource = DataTableUtil.ArrayToDataTableFloat(neuralNet.Error, columHeaderPrefix);
+            gvError.DataBind();
+        }
+
+        private void BindSigmoidGradient()
+        {
+            string columHeaderPrefix = "SigmoidGradient_";
+            gvGradient.DataSource = DataTableUtil.ArrayToDataTableFloat(neuralNet.SigmoidGradient, columHeaderPrefix);
+            gvGradient.DataBind();
+        }
+
+        private void BindErrorDelta()
+        {
+            string columHeaderPrefix = "ErrorDelta_";
+            gvErrorDelta.DataSource = DataTableUtil.ArrayToDataTableFloat(neuralNet.ErrorDelta, columHeaderPrefix);
+            gvErrorDelta.DataBind();
+        }
+
+        private void BindAdjustment()
+        {
+            string columHeaderPrefix = "Adjustment_";
+            gvAdjustment.DataSource = DataTableUtil.ArrayToDataTableFloat(neuralNet.Adjustment, columHeaderPrefix);
+            gvAdjustment.DataBind();
+        }
+
+        private void BindFinalWeights()
+        {
+            string columHeaderPrefix = "FinalWeight_";
+            gvFinalWeights.DataSource = DataTableUtil.ArrayToDataTableFloat(neuralNet.SynapticWeightsSyn0, columHeaderPrefix);
+            gvFinalWeights.DataBind();
+        }
+
     }
 }
